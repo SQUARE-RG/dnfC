@@ -1,3 +1,5 @@
+# 读取dnfC的配置文件
+
 import json
 import os
 class dnfcConfigure:

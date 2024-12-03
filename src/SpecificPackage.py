@@ -1,3 +1,37 @@
+# SpecificPackage对象表示一个软件包，其中包含了元数据信息
+# PackageEntry对象表示一个“条目”，在元数据中，软件包会声明所“依赖”的条目或“提供”的条目。若软件包A依赖于软件包B，则要求软件包A依赖的条目可以和软件包B提供的条目匹配
+# 条目包含名称和可选的版本约束信息
+# 一个软件包无需声明，会默认提供一个以软件包为名，约束条件为等于软件包版本的条目。且此条目在匹配时优先级更高。
+# compareEntry函数用于判断条目版本号的大小关系
+# EntryMap是条目的索引，当已知一些软件包的元数据，希望对上述软件包分析依赖关系时，应首先生成一个EntryMap，将所有参与分析的软件包“注册”到EntryMap，从而可以通过条目名查找到所有提供该条目名称的软件包
+# EntryMap的queryRequires函数用于根据给定的依赖信息确定合适的软件包
+# SpecificPackage的findRequires函数依赖于EntryMap的queryRequires函数，依靠一定的策略查找该软件包依赖的所有软件包
+# getDependes_dfs将对SpecificPackage对象调用findRequires函数，确定一个软件包依赖的软件包后，递归地确定依赖软件包的软件包
+# getDependsPrepare和getDepends是封装好的函数，用于被外部调用，提供尽可能简洁的功能
+
+# 综上，假设希望安装一些软件包(以下用packages表示，其为一个列表，列表中的元素是SpecificPackage对象)
+# 目前已知仓库中的软件包(以下用repoPackages表示，结构同上)
+# 基于仓库软件包的信息，分析出希望安装的软件包的外部依赖的参考代码如下
+# entryMap=SpecificPackage.EntryMap()
+# 将参与分析的软件包注册到entryMap
+# skipPackages=dict()
+# for package in packages:
+# 	package.status="willInstalled"
+# 	package.registerProvides(entryMap)
+# 	skipPackages[package.fullName]=package
+# for package in repoPackages:
+# 	if package.fullName in skipPackages: #若已指定安装此软件包，则使用packages列表中的信息，而非仓库中的信息
+# 		continue
+# 	package.registerProvides(entryMap)
+# 
+# 确定外部依赖时，安装的多个软件包会互相影响。需要分析两遍，先对所有参与安装的软件包执行一次getDependsPrepare
+# for package in packages:
+# 	SpecificPackage.getDependsPrepare(entryMap,package)
+# 最后逐个确认外部依赖
+# for package in packages:
+# 	depset=SpecificPackage.getDepends(entryMap,package,set())
+# 	depset即为该软件包的外部依赖列表(set形式)
+
 import sys
 import os
 import traceback

@@ -1,3 +1,5 @@
+# 向服务器端上传SBOM文件，将返回结果分析并输出
+
 import loadConfig
 import requests
 import json

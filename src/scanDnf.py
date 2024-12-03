@@ -1,3 +1,10 @@
+# 针对软件源仓库中的软件包进行分析的模块
+# 依赖于getNewInstall模块，有关该模块详细细节详阅getNewInstall.py
+# 若scanDeb的dumpFileOnly参数为True，则调用getNewInsatll时会指定获取的依赖中包含已安装依赖，若为False，则只获取未安装依赖。
+# 下载指定的软件包的二进制包，分析内部依赖，和外部依赖一起生成SBOM信息。
+# 对于install命令，获取外部依赖列表后，逐个下载外部依赖二进制包，分析其内部依赖。将所有外部依赖和内部依赖上传服务器查询CVE，并输出到屏幕
+
+
 import os
 DIR = os.path.split(os.path.abspath(__file__))[0]
 import getNewInstall

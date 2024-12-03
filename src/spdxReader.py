@@ -1,3 +1,4 @@
+#读取spdx格式的SBOM信息，仅用于scanDeb模块分析外部依赖的内部依赖后，筛查是否分析出有效的内部依赖（若无有效内部依赖则跳过查询CVE步骤）
 
 import os
 import sys

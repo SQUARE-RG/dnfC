@@ -1,3 +1,6 @@
+#获取操作系统信息
+
+
 from subprocess import PIPE, Popen
 import json
 OSName=""

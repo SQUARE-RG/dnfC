@@ -1,3 +1,13 @@
+# getNewInstall函数传入的packages参数是一个列表，表示同时指定安装不定数量的软件包，分析每个软件包的外部依赖
+
+# 若getNewInstall函数的includeInstalled参数为False，则只调用apt进行模拟安装，获取软件名和版本号，从软件仓库元数据中查找对应元数据详细信息，从而获取未安装的外部依赖及其元数据
+# 若getNewInstall函数的includeInstalled参数为True，则：
+# 使用同样步骤获取未安装的外部依赖及其元数据
+# 读取本地安装软件包的元数据
+# 将获取的未安装外部依赖软件包的元数据和本地安装的软件包的元数据一起进行依赖图分析，找出未安装外部依赖软件包依赖了哪些本地安装的软件包
+# 将被依赖的本地安装软件包加入外部依赖列表，作为结果返回
+
+
 import os
 import SpecificPackage
 import SourcesListManager

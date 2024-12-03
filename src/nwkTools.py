@@ -1,3 +1,5 @@
+#常用网络下载功能的简单包装
+
 import pycurl
 import certifi
 import wget
