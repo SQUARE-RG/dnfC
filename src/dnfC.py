@@ -46,7 +46,9 @@ def user_main(args, exit_code=False):
 			errcode=runDnf(args)
 			break
 	if errcode is None:
-		if args[0]=='install':
+		if len(args)==0:
+			errcode=runDnf(args)
+		elif args[0]=='install':
 			if scanDnf.scanDnf(args) is True:
 				errcode=runDnf(args,setyes=True)
 			else:
