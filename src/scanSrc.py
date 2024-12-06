@@ -13,8 +13,7 @@ import requests
 import loadConfig
 import osInfo
 import io
-from spdx.srcmain import srcmain
-DIR = os.path.split(os.path.abspath(__file__))[0]
+from spdx import srcmain
 
 def postFile(file,dnfConfigure:loadConfig.dnfcConfigure):
 	try:
@@ -180,8 +179,8 @@ def scanSrc(args):
 			depends[p.packageInfo.name+'@'+p.packageInfo.version]=p.packageInfo.dumpAsDict()
 		dependsList=list(depends.values())
 		if genSpdx is True:
-			srcmain(normalize.normalReplace(package.fullName),srcPath,dependsList,'spdx',spdxPath)
+			srcmain.srcmain(normalize.normalReplace(package.fullName),srcPath,dependsList,'spdx',spdxPath)
 		if genCyclonedx is True:
-			srcmain(normalize.normalReplace(package.fullName),srcPath,dependsList,'cyclonedx',cyclonedxPath)
+			srcmain.srcmain(normalize.normalReplace(package.fullName),srcPath,dependsList,'cyclonedx',cyclonedxPath)
 		print("generate SBOM for "+package.fullName)
 	return 0

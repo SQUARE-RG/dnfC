@@ -16,7 +16,6 @@
 
 import sys
 import os
-DIR = os.path.split(os.path.abspath(__file__))[0]
 import scanBin
 import scanSrc
 import scanDnf
@@ -78,5 +77,5 @@ def user_main(args, exit_code=False):
 		sys.exit(errcode)
 	return errcode
 
-#if __name__ == '__main__':
-#	user_main(sys.argv[1:],True)
+if __name__ == '__main__':
+	user_main(sys.argv[1:],True)

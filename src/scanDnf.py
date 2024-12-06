@@ -6,7 +6,6 @@
 
 
 import os
-DIR = os.path.split(os.path.abspath(__file__))[0]
 import getNewInstall
 import SourcesListManager
 import nwkTools
@@ -16,7 +15,7 @@ import normalize
 import json
 import loadConfig
 import spdxReader
-from spdx.spdxmain import spdxmain
+from spdx import spdxmain
 
 def downloadPackage(selectedPackage):
 	return nwkTools.downloadFile(selectedPackage.repoURL+'/'+selectedPackage.fileName,'/tmp/dnfC/packages',normalize.normalReplace(selectedPackage.fileName.rsplit('/',1)[1]))
@@ -75,13 +74,13 @@ def scanDnf(args,genSpdx=True,saveSpdxPath=None,genCyclonedx=False,saveCyclonedx
 		packageFilePath=downloadPackage(selectedPackage)
 		if dumpFileOnly is True:
 			if genSpdx is True:
-				spdxPath=spdxmain(normalize.normalReplace(selectedPackageName),packageFilePath,dependsList,'spdx',saveSpdxPath)
+				spdxPath=spdxmain.spdxmain(normalize.normalReplace(selectedPackageName),packageFilePath,dependsList,'spdx',saveSpdxPath)
 			if genCyclonedx is True:
-				cyclonedxPath=spdxmain(normalize.normalReplace(selectedPackageName),packageFilePath,dependsList,'cyclonedx',saveCyclonedxPath)
+				cyclonedxPath=spdxmain.spdxmain(normalize.normalReplace(selectedPackageName),packageFilePath,dependsList,'cyclonedx',saveCyclonedxPath)
 			continue
-		spdxPath=spdxmain(normalize.normalReplace(selectedPackageName),packageFilePath,dependsList,'spdx',saveSpdxPath)
+		spdxPath=spdxmain.spdxmain(normalize.normalReplace(selectedPackageName),packageFilePath,dependsList,'spdx',saveSpdxPath)
 		if genCyclonedx is True:
-			cyclonedxPath=spdxmain(normalize.normalReplace(selectedPackageName),packageFilePath,dependsList,'cyclonedx',saveCyclonedxPath)
+			cyclonedxPath=spdxmain.spdxmain(normalize.normalReplace(selectedPackageName),packageFilePath,dependsList,'cyclonedx',saveCyclonedxPath)
 		with open(spdxPath,"r") as f:
 			spdxObj=json.load(f)
 		cves=queryCVE.queryCVE(spdxObj,dnfConfigure)
@@ -92,7 +91,7 @@ def scanDnf(args,genSpdx=True,saveSpdxPath=None,genCyclonedx=False,saveCyclonedx
 			packageFilePath=downloadPackage(package)
 			if packageFilePath is None:
 				continue
-			spdxPath=spdxmain(package.fullName,packageFilePath,[],'spdx')
+			spdxPath=spdxmain.spdxmain(package.fullName,packageFilePath,[],'spdx')
 			with open(spdxPath,"r") as f:
 				spdxObj=json.load(f)
 			if not checkIncludeDepends(spdxObj):
@@ -100,7 +99,9 @@ def scanDnf(args,genSpdx=True,saveSpdxPath=None,genCyclonedx=False,saveCyclonedx
 			#print("find depends!!!")
 			#print(spdxPath)
 			dependsCves=queryCVE(spdxObj,dnfConfigure)
+			print(dependsCves)
 			if dependsCves is None:
+				haveOutput=True
 				continue
 			for projectName,c in dependsCves.items():
 				if len(c)==0:
@@ -109,6 +110,7 @@ def scanDnf(args,genSpdx=True,saveSpdxPath=None,genCyclonedx=False,saveCyclonedx
 					cves[package.packageInfo.name].extend(c)
 		
 		if cves is None:
+			haveOutput=True
 			continue
 		if selectedPackage.packageInfo.name in cves:
 			selectedPackage_cves=cves[selectedPackage.packageInfo.name]

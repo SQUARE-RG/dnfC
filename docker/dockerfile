@@ -70,3 +70,6 @@ ENTRYPOINT [ "/root/rpmbuild/RPMS/" ]
 
 FROM scratch AS rpm_package
 COPY --from=packager /root/rpmbuild/RPMS /
+
+FROM scratch AS binary
+COPY --from=compiler /app/dist/dnfc /

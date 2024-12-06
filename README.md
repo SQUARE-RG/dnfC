@@ -53,12 +53,10 @@ rpmbuild -ba SPECS/dnfC.spec
 `~/rpmbuild/RPMS/`文件夹下即为生成的rpm包
 
 ### 利用docker构建软件包
-仅构建二进制文件：
-docker build --output=<二进制文件保存目录> --target=binary -f docker/dockerfile_pycompile .
 
 构建rpm软件包
 ```
-docker build --output=<软件包保存目录> --build-arg SYSTEM_NAME="<操作系统名称>" --build-arg VERSION="<发行版版本>" --target=rpm_package -f docker/dockerfile .
+docker build --output=<软件包保存目录> --build-arg SYSTEM_NAME="<操作系统名称(docker hub记录的名称)>" --build-arg VERSION="<发行版版本>" --target=rpm_package -f docker/dockerfile .
 ```
 例如
 ```
