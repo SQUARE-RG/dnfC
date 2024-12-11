@@ -64,6 +64,5 @@ docker build --output=. --build-arg SYSTEM_NAME="centos" --build-arg VERSION="8"
 ```
 或者
 ```
-docker build --output=. --build-arg SYSTEM_NAME="openeuler/openeuler" --build-arg VER
-SION="24.03" --target=rpm_package -f docker/dockerfile .
+docker build --output=. --build-arg SYSTEM_NAME="openeuler/openeuler" --build-arg VERSION="24.03" --target=rpm_package -f docker/dockerfile .
 ```

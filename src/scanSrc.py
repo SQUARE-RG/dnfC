@@ -98,7 +98,7 @@ def parseProvides(PackageName)->list:
 	return RepoFileManager.parseRPMItemInfo(data)
 def setInstalledPackagesStatus(sourcesListManager:SourcesListManager.SourcesListManager):
 	res=list()
-	p = Popen("/usr/bin/dnf list --installed", shell=True, stdout=PIPE, stderr=PIPE)
+	p = Popen("/usr/bin/dnf list --installed -C", shell=True, stdout=PIPE, stderr=PIPE)
 	stdout, stderr = p.communicate()
 	f=io.StringIO(stdout.decode())
 	while readStr(f)!="Installed":

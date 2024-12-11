@@ -78,7 +78,7 @@ def readStr(f):
 	return res
 def getInstalledPackageInfo(sourcesListManager:SourcesListManager.SourcesListManager):
 	res=[]
-	with os.popen("/usr/bin/dnf list --installed") as f:
+	with os.popen("/usr/bin/dnf list --installed -C") as f:
 		while readStr(f)!="Installed":
 			#ignore Waiting for process with pid xxx to finish.
 			pass
@@ -106,7 +106,7 @@ def getInstalledPackageInfo(sourcesListManager:SourcesListManager.SourcesListMan
 
 	
 def getNewInstall(args,sourcesListManager:SourcesListManager.SourcesListManager,includeInstalled=False)->dict:
-	cmd="/usr/bin/dnf install --assumeno"
+	cmd="/usr/bin/dnf install --assumeno -C"
 	packages=[]
 	for arg in args:
 		if arg.startswith('--genspdx'):
