@@ -93,10 +93,10 @@ def getInstalledPackageInfo(sourcesListManager:SourcesListManager.SourcesListMan
 				raise Exception("unexpected format: "+name_arch)
 			version_release=readStr(f)
 			version,release=RepoFileManager.splitVersionRelease(version_release)
-			dist=release.rsplit('.',1)[1]
+			#dist=release.rsplit('.',1)[1]
 			channel=readStr(f)[1:]
 			#print(osType,dist,name,version,release)
-			package=sourcesListManager.getSpecificPackage(fullName,dist,version,release,arch)
+			package=sourcesListManager.getSpecificPackage(fullName,channel,version,release,arch)
 			if package is not None:
 				package.status="installed"
 				res.append(package)

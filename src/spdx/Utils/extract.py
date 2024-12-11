@@ -69,7 +69,7 @@ def decompress(source_file, target_dir):
         with gzip.open(source_file, "rb") as g:
             with open(os.path.join(target_dir, filename), "wb") as f:
                 f.write(g.read())
-    elif bz2.is_bz2(source_file):
+    elif source_file.endswith(".bz2"):
         with bz2.BZ2File(source_file, "rb") as b:
             with open(os.path.join(target_dir, filename), "wb") as f:
                 f.write(b.read())

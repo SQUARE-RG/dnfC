@@ -115,7 +115,7 @@ def setInstalledPackagesStatus(sourcesListManager:SourcesListManager.SourcesList
 			raise Exception("unexpected format: "+name_arch)
 		version_release=readStr(f)
 		version,release=RepoFileManager.splitVersionRelease(version_release)
-		dist=release.rsplit('.',1)[1]
+		#dist=release.rsplit('.',1)[1]
 		channel=readStr(f)[1:]
 		#if channel=="system":
 		#	continue
