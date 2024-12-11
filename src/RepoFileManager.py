@@ -151,8 +151,6 @@ class RepoFileManager:
 	def queryPackage(self,name,version,release,arch):
 		#print("\nquery:")
 		#print(name,version,release,arch)
-		if "." not in release:
-			raise Exception("version have no '.' : "+release)
 		e=SpecificPackage.PackageEntry(name,"EQ",version,release)
 		if name in self.packageMap:
 			for specificPackage in self.packageMap[name]:
