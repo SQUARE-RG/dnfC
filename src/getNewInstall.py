@@ -142,7 +142,7 @@ def getNewInstall(args,sourcesListManager:SourcesListManager.SourcesListManager,
 			info=info.strip()
 			if len(info)==0:
 				continue
-			if info=="Installing dependencies:" or info=="Installing weak dependencies:" or info=="Downgrading:":
+			if info=="Installing dependencies:" or info=="Installing weak dependencies:" or info=="Downgrading:" or info=="Upgrading:":
 				inSelectSection=False
 				continue
 			if info=="Transaction Summary" or info=="Enabling module streams:":
