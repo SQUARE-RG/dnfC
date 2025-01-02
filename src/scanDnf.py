@@ -98,8 +98,8 @@ def scanDnf(args,genSpdx=True,saveSpdxPath=None,genCyclonedx=False,saveCyclonedx
 				continue
 			#print("find depends!!!")
 			#print(spdxPath)
-			dependsCves=queryCVE(spdxObj,dnfConfigure)
-			print(dependsCves)
+			dependsCves=queryCVE.queryCVE(spdxObj,dnfConfigure)
+			#print(dependsCves)
 			if dependsCves is None:
 				haveOutput=True
 				continue
